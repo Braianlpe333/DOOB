@@ -3,7 +3,7 @@ package co.edu.uco.grades.dto;
 import co.edu.uco.crosscutting.util.object.UtilObject;
 import co.edu.uco.crosscutting.util.text.UtilText;
 
-public class Student_DTO {
+public class ProfessorDTO {
 	
 	private int id;
 	private String idNumber;
@@ -11,15 +11,15 @@ public class Student_DTO {
 	private String name;
 	private String email;
 	
-	public Student_DTO() {
+	public ProfessorDTO() {
 		super();
 		setIdNumber(UtilText.EMPTY);
 		setIdType(new IdTypeDTO());
 		setName(UtilText.EMPTY);
 		setEmail(UtilText.EMPTY);
 	}
-
-	public Student_DTO(int id, String idNumber, IdTypeDTO idType, String name, String email) {
+	
+	public ProfessorDTO(int id, String idNumber, IdTypeDTO idType, String name, String email) {
 		super();
 		setId(id);
 		setIdNumber(idNumber);
@@ -27,47 +27,36 @@ public class Student_DTO {
 		setName(name);
 		setEmail(email);
 	}
-
+	
 	public int getId() {
 		return id;
 	}
-
 	public void setId(int id) {
 		this.id = id;
 	}
-
 	public String getIdNumber() {
 		return idNumber;
 	}
-
 	public void setIdNumber(String idNumber) {
-		this.idNumber = UtilText.getDefault(idNumber);
+		this.idNumber = idNumber;
 	}
-
 	public IdTypeDTO getIdType() {
 		return idType;
 	}
-
 	public void setIdType(IdTypeDTO idType) {
 		this.idType = UtilObject.getUtilObject().getDefault(idType, new IdTypeDTO());
 	}
-
 	public String getName() {
 		return name;
 	}
-
 	public void setName(String name) {
 		this.name = UtilText.getDefault(name);
 	}
-
 	public String getEmail() {
 		return email;
 	}
-
 	public void setEmail(String email) {
 		this.email = UtilText.getDefault(email);
 	}
 	
-	
-
 }

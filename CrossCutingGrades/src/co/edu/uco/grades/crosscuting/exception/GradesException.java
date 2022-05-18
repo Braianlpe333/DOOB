@@ -28,7 +28,7 @@ public class GradesException extends GeneralExeption{
 	public static GradesException buildTechnicalExeption(String tecnicalMessage) {
 		return new GradesException(null, tecnicalMessage, null, ExeptionType.TECHNICAL, null);
 	}
-	
+	 
 	public static GradesException buildTechnicalExeption(String tecnicalMessage, Exception rootException, ExceptionLocation location) {
 		return new GradesException(null, tecnicalMessage, rootException, ExeptionType.TECHNICAL , location);
 	}

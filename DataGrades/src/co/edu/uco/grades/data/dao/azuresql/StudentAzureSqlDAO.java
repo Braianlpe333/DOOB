@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+
 import co.edu.grades.data.dao.StudentDAO;
 import co.edu.grades.data.dao.connection.ConnectionSQL;
 
@@ -21,10 +22,13 @@ public class StudentAzureSqlDAO extends ConnectionSQL implements StudentDAO{
 		
 	@Override
 	public void create(Student_DTO student) {
-		String sql = "INSERT INTO Students(valor1) VALUES(?)";
-		
+		String sql = "INSERT INTO Students(idNumber, idType, name, email) VALUES(?, ?, ?, ?)";
+		 
 		try(PreparedStatement preparedStatement = getConnection().prepareStatement(sql)){
-			preparedStatement.setString(1, Student.getValor1());
+			preparedStatement.setString(1, student.getIdNumber());
+			preparedStatement.setObject(1, student.getIdType());
+			preparedStatement.setString(1, student.getName());
+			preparedStatement.setString(1, student.getEmail());
 			
 			preparedStatement.executeUpdate();
 			

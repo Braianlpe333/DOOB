@@ -4,11 +4,11 @@ import co.edu.uco.grades.dto.SessionDTO;
 
 public interface SessionDAO {
 	
-	void create(SessionDTO professor);
+	void create(SessionDTO session);
 	
-	void update(SessionDTO professor);
+	void update(SessionDTO session);
 	
 	void delete(int id);
 	
-	void find(SessionDTO professor);
+	void find(SessionDTO session);
 }

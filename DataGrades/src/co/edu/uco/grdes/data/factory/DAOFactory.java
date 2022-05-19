@@ -5,6 +5,9 @@ import java.sql.Connection;
 import co.edu.grades.data.dao.CourseDAO;
 import co.edu.grades.data.dao.IdTypeDAO;
 import co.edu.grades.data.dao.ProfessorDAO;
+import co.edu.grades.data.dao.SessionDAO;
+import co.edu.grades.data.dao.StudentCourseDAO;
+import co.edu.grades.data.dao.StudentCourseStateDAO;
 import co.edu.grades.data.dao.StudentDAO;
 import co.edu.grades.data.dao.SubjectDAO;
 
@@ -33,6 +36,12 @@ public abstract class DAOFactory {
 	public abstract SubjectDAO getSubjectDAO();
 	
 	public abstract CourseDAO getCourseDAO();
+	
+	public abstract SessionDAO getSessionDAO();
+	
+	public abstract StudentCourseStateDAO getStudentCourseStateDAO();
+	
+	public abstract StudentCourseDAO studentCourseDAO();
 
 	public void closeConection() {
 		

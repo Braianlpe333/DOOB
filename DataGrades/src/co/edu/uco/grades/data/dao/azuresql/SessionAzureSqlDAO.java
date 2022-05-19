@@ -31,9 +31,9 @@ public class SessionAzureSqlDAO extends ConnectionSQL implements SessionDAO{
 			preparedStatement.executeUpdate();
 			
 		}catch(SQLException exception){
-			throw GradesException.buildTechnicalDataExeption("There was a problem trying to create the new Professor on Azure SQL Server", exception);
+			throw GradesException.buildTechnicalDataExeption("There was a problem trying to create the new Session on Azure SQL Server", exception);
 		}catch(Exception exception){
-			throw GradesException.buildTechnicalDataExeption("An unexpected has ocurred problem trying to create the new Professor on Azure SQL Server", exception);
+			throw GradesException.buildTechnicalDataExeption("An unexpected has ocurred problem trying to create the new Session on Azure SQL Server", exception);
 		}
 	}
 

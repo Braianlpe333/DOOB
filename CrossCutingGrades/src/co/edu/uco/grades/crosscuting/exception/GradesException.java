@@ -10,7 +10,10 @@ public class GradesException extends GeneralExeption{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -7457237925352513736L;
+	private static final long serialVersionUID = 4466241036465446636L;
+	/**
+	 * 
+	 */
 	private ExeptionType type;
 	private ExceptionLocation location;
 	
@@ -22,14 +25,23 @@ public class GradesException extends GeneralExeption{
 		setLocation(location);
 	}
 	
+	public static GradesException build(String userMessage, String technicalMessage) {
+		return new GradesException(userMessage, technicalMessage, null, null, null);
+	}
+	
+	public static GradesException build(String userMessage, String tecnicalMessage, Exception rootExeption) {
+		return new GradesException(userMessage, tecnicalMessage,rootExeption, null, null);
+	}
+	
 	public static GradesException build(String userMessage) {
 		return new GradesException(userMessage, userMessage, null, ExeptionType.BUSINESS, null);
 	}
+	
 	public static GradesException buildTechnicalExeption(String tecnicalMessage) {
 		return new GradesException(null, tecnicalMessage, null, ExeptionType.TECHNICAL, null);
 	}
 	 
-	public static GradesException buildTechnicalExeption(String tecnicalMessage, Exception rootException, ExceptionLocation location) {
+	public static GradesException buildTechnicalExeption(String tecnicalMessage, Exception rootException, ExeptionType type, ExceptionLocation location) {
 		return new GradesException(null, tecnicalMessage, rootException, ExeptionType.TECHNICAL , location);
 	}
 	
@@ -41,13 +53,7 @@ public class GradesException extends GeneralExeption{
 		return new GradesException(null, tecnicalMessage, rootException, ExeptionType.TECHNICAL , ExceptionLocation.DATA);
 	}
 	
-	public static GradesException build(String userMessage, String technicalMessage) {
-		return new GradesException(userMessage, technicalMessage, null, null, null);
-	}
 	
-	public static GradesException build(String userMessage, String tecnicalMessage, Exception rootExeption) {
-		return new GradesException(userMessage, tecnicalMessage,rootExeption, null, null);
-	}
 	
 	
 	
@@ -63,6 +69,6 @@ public class GradesException extends GeneralExeption{
 	private void setLocation(ExceptionLocation location) {
 		this.location  = UtilObject.getUtilObject().getDefault(location, ExceptionLocation.GENERAL);
 	}
-	
+
 
 }

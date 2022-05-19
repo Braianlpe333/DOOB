@@ -38,8 +38,8 @@
 		</dependency>
 		<dependency>
 			<groupId>co.edu.uco.grades</groupId>
-  <artifactId>CrossCutingGrades</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  			<artifactId>CrossCutingGrades</artifactId>
+  			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 

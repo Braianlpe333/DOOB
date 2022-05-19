@@ -1,7 +1,7 @@
 package co.edu.uco.grades.dto;
-//import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import co.edu.uco.crosscuting.util.date.UtilDate;
 import co.edu.uco.crosscutting.util.object.UtilObject;
 
 public class CourseDTO {
@@ -16,8 +16,6 @@ public class CourseDTO {
 		super();
 		setSubject(new SubjectDTO());
 		setProfessor(new ProfessorDTO());
-		this.initialDate = initialDate;
-		this.finalDate = finalDate;
 	}
 	
 	public CourseDTO(int id, SubjectDTO subject, ProfessorDTO professor, Date initialDate, Date finalDate) {
@@ -51,17 +49,14 @@ public class CourseDTO {
 		return initialDate;
 	}
 	public void setInitialDate(Date initialDate) {
-		this.initialDate = initialDate;
+		this.initialDate = UtilDate.getUtilDate().getDefault(initialDate);
 	}
 	public Date getFinalDate() {
 		return finalDate;
 	}
 	public void setFinalDate(Date finalDate) {
-		this.finalDate = finalDate;
+		this.finalDate = UtilDate.getUtilDate().getDefault(finalDate);
 	}
 	
-	
-	
-	//public static SimpleDateFormat sdf= new SimpleDateFormat("dd/MM/YYYY");
 	
 }

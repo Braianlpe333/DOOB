@@ -4,15 +4,21 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import co.edu.grades.data.dao.CourseDAO;
 import co.edu.grades.data.dao.IdTypeDAO;
+import co.edu.grades.data.dao.ProfessorDAO;
 import co.edu.grades.data.dao.StudentDAO;
+import co.edu.grades.data.dao.SubjectDAO;
 import co.edu.uco.corsscuting.util.sql.UtilConnection;
 import co.edu.uco.crosscutting.util.object.UtilObject;
 import co.edu.uco.grades.crosscuting.exception.GradesException;
 import co.edu.uco.grades.crosscuting.exeption.enumeration.ExceptionLocation;
 import co.edu.uco.grades.crosscuting.exeption.enumeration.ExeptionType;
+import co.edu.uco.grades.data.dao.azuresql.CourseAzureSqlDAO;
 import co.edu.uco.grades.data.dao.azuresql.IdTypeAzureSqlDAO;
+import co.edu.uco.grades.data.dao.azuresql.ProfessorAzureSqlDAO;
 import co.edu.uco.grades.data.dao.azuresql.StudentAzureSqlDAO;
+import co.edu.uco.grades.data.dao.azuresql.SubjectAzureSqlDAO;
 import co.edu.uco.grades.dto.Student_DTO;
 import co.edu.uco.grdes.data.factory.DAOFactory;
 
@@ -36,11 +42,11 @@ public class AzuresqlDAOFactory extends DAOFactory {
 			}
 			getConnection().setAutoCommit(false);
 		}
-		catch(SQLException excepcion) {
+		catch(SQLException exception) {
 			throw GradesException.buildTechnicalExeption("There was a problem tryin to init with sql server at jdbc:sqlserver://academic-database-server.database.windows.net:1433;database=academic-db;user=academicDmlUser",
-			exception, ExeptionType.TECHNICAL, ExceptionLocation.DATA );
+					exception, ExeptionType.TECHNICAL, ExceptionLocation.DATA );
 		}
-		 catch(Exception excepcion) {
+		 catch(Exception exception) {
 				throw GradesException.buildTechnicalExeption("An unexpected problem has ocurred tryin to get the connection with sql server at jdbc:sqlserver://academic-database-server.database.windows.net:1433;database=academic-db;user=academicDmlUser",
 					exception, ExeptionType.TECHNICAL, ExceptionLocation.DATA );
 			}
@@ -61,11 +67,11 @@ public class AzuresqlDAOFactory extends DAOFactory {
 		}catch(GradesException exception) {
 			throw exception;
 		}
-		catch(SQLException excepcion) {
+		catch(SQLException exception) {
 			throw GradesException.buildTechnicalExeption("There was a problem tryin to commit with sql server at jdbc:sqlserver://academic-database-server.database.windows.net:1433;database=academic-db;user=academicDmlUser",
 			exception, ExeptionType.TECHNICAL, ExceptionLocation.DATA );
 		}
-		 catch(Exception excepcion) {
+		 catch(Exception exception) {
 				throw GradesException.buildTechnicalExeption("An unexpected problem has ocurred tryin to get the connection with sql server at jdbc:sqlserver://academic-database-server.database.windows.net:1433;database=academic-db;user=academicDmlUser",
 					exception, ExeptionType.TECHNICAL, ExceptionLocation.DATA );
 			}
@@ -88,11 +94,11 @@ public class AzuresqlDAOFactory extends DAOFactory {
 		catch(GradesException exception) {
 			throw exception;
 		}
-		catch(SQLException excepcion) {
+		catch(SQLException exception) {
 			throw GradesException.buildTechnicalExeption("There was a problem tryin to rollback with sql server at jdbc:sqlserver://academic-database-server.database.windows.net:1433;database=academic-db;user=academicDmlUser",
 					exception, ExeptionType.TECHNICAL, ExceptionLocation.DATA );
 		}
-		 catch(Exception excepcion) {
+		 catch(Exception exception) {
 				throw GradesException.buildTechnicalExeption("An unexpected problem has ocurred tryin to get the connection with sql server at jdbc:sqlserver://academic-database-server.database.windows.net:1433;database=academic-db;user=academicDmlUser",
 						exception, ExeptionType.TECHNICAL, ExceptionLocation.DATA );
 			}
@@ -104,11 +110,11 @@ public class AzuresqlDAOFactory extends DAOFactory {
 		try {
 			connection = DriverManager.getConnection(stringConnection);
 		}
-		catch(SQLException excepcion) {
+		catch(SQLException exception) {
 			throw GradesException.buildTechnicalExeption("There was a problem tryin to get the connection with sql server at jdbc:sqlserver://academic-database-server.database.windows.net:1433;database=academic-db;user=academicDmlUser",
 					exception, ExeptionType.TECHNICAL, ExceptionLocation.DATA );
 		}
-		 catch(Exception excepcion) {
+		 catch(Exception exception) {
 				throw GradesException.buildTechnicalExeption("An unexpected problem has ocurred tryin to get the connection with sql server at jdbc:sqlserver://academic-database-server.database.windows.net:1433;database=academic-db;user=academicDmlUser",
 						exception, ExeptionType.TECHNICAL, ExceptionLocation.DATA );
 			}
@@ -124,11 +130,11 @@ public class AzuresqlDAOFactory extends DAOFactory {
 		try {
 			getConnection().close();
 		}
-		catch(SQLException excepcion) {
+		catch(SQLException exception) {
 			throw GradesException.buildTechnicalExeption("There was a problem tryin to get the connection with sql server at jdbc:sqlserver://academic-database-server.database.windows.net:1433;database=academic-db;user=academicDmlUser",
 					exception, ExeptionType.TECHNICAL, ExceptionLocation.DATA );
 		}
-		 catch(Exception excepcion) {
+		 catch(Exception exception) {
 				throw GradesException.buildTechnicalExeption("An unexpected problem has ocurred tryin to get the connection with sql server at jdbc:sqlserver://academic-database-server.database.windows.net:1433;database=academic-db;user=academicDmlUser",
 						exception, ExeptionType.TECHNICAL, ExceptionLocation.DATA );
 			}
@@ -149,12 +155,27 @@ public class AzuresqlDAOFactory extends DAOFactory {
 
 	@Override
 	public StudentDAO getStudentDAO() {
-		return StudentAzureSqlDAO.create(getConnection());
+		return StudentAzureSqlDAO.build(getConnection());
 	}
 
 	@Override
 	public IdTypeDAO getIdTypeDAO() {
 		return IdTypeAzureSqlDAO.build(getConnection());
+	}
+
+	@Override
+	public ProfessorDAO getProfessorDAO() {
+		return ProfessorAzureSqlDAO.build(getConnection());
+	}
+
+	@Override
+	public SubjectDAO getSubjectDAO() {
+		return SubjectAzureSqlDAO.build(getConnection());
+	}
+
+	@Override
+	public CourseDAO getCourseDAO() {
+		return CourseAzureSqlDAO.build(getConnection());
 	}
 	
 	

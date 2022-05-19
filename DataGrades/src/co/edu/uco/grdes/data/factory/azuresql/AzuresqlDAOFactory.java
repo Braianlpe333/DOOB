@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import co.edu.grades.data.dao.AttendanceDAO;
 import co.edu.grades.data.dao.CourseDAO;
 import co.edu.grades.data.dao.IdTypeDAO;
 import co.edu.grades.data.dao.ProfessorDAO;
@@ -17,6 +18,7 @@ import co.edu.uco.crosscutting.util.object.UtilObject;
 import co.edu.uco.grades.crosscuting.exception.GradesException;
 import co.edu.uco.grades.crosscuting.exeption.enumeration.ExceptionLocation;
 import co.edu.uco.grades.crosscuting.exeption.enumeration.ExeptionType;
+import co.edu.uco.grades.data.dao.azuresql.AttendanceAzureSqlDAO;
 import co.edu.uco.grades.data.dao.azuresql.CourseAzureSqlDAO;
 import co.edu.uco.grades.data.dao.azuresql.IdTypeAzureSqlDAO;
 import co.edu.uco.grades.data.dao.azuresql.ProfessorAzureSqlDAO;
@@ -195,8 +197,13 @@ public class AzuresqlDAOFactory extends DAOFactory {
 	}
 
 	@Override
-	public StudentCourseDAO studentCourseDAO() {
+	public StudentCourseDAO getStudentCourseDAO() {
 		return StudentCourseAzureSqlDAO.build(getConnection());
+	}
+
+	@Override
+	public AttendanceDAO getAttendanceDAO() {
+		return AttendanceAzureSqlDAO.build(getConnection());
 	}
 	
 	

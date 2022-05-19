@@ -2,6 +2,7 @@ package co.edu.uco.grdes.data.factory;
 
 import java.sql.Connection;
 
+import co.edu.grades.data.dao.AttendanceDAO;
 import co.edu.grades.data.dao.CourseDAO;
 import co.edu.grades.data.dao.IdTypeDAO;
 import co.edu.grades.data.dao.ProfessorDAO;
@@ -41,7 +42,9 @@ public abstract class DAOFactory {
 	
 	public abstract StudentCourseStateDAO getStudentCourseStateDAO();
 	
-	public abstract StudentCourseDAO studentCourseDAO();
+	public abstract StudentCourseDAO getStudentCourseDAO();
+	
+	public abstract AttendanceDAO getAttendanceDAO();
 
 	public void closeConection() {
 		

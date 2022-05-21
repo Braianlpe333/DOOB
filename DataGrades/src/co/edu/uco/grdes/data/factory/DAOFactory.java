@@ -11,11 +11,12 @@ import co.edu.grades.data.dao.StudentCourseDAO;
 import co.edu.grades.data.dao.StudentCourseStateDAO;
 import co.edu.grades.data.dao.StudentDAO;
 import co.edu.grades.data.dao.SubjectDAO;
+import co.edu.uco.grdes.data.factory.azuresql.AzuresqlDAOFactory;
 
 public abstract class DAOFactory {
 	
 	public static DAOFactory getDaoFactory(){
-		return null;
+		return AzuresqlDAOFactory.create();
 	}
 	
 	public abstract void commitTransaction();

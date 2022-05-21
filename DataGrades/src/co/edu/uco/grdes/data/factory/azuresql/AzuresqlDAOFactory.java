@@ -38,6 +38,10 @@ public class AzuresqlDAOFactory extends DAOFactory {
 		openConnection();
 	}
 	
+	public static DAOFactory create() {
+		return new AzuresqlDAOFactory();
+	}
+	
 	@Override
 	public void initTransaction() {
 		if(UtilConnection.isClosed(getConnection())){
@@ -152,13 +156,6 @@ public class AzuresqlDAOFactory extends DAOFactory {
 	protected Connection getConnection() {
 		return connection;
 		
-	}
-	
-	public static void close(String[] args) {
-		AzuresqlDAOFactory az = new AzuresqlDAOFactory();
-		System.out.println("Conexion Abierta!");
-		az.closeConection();
-		System.out.println("Conexion Cerrada!");
 	}
 
 	@Override

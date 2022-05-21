@@ -26,7 +26,7 @@ public class StudentAzureSqlDAO extends ConnectionSQL implements StudentDAO{
 		 
 		try(PreparedStatement preparedStatement = getConnection().prepareStatement(sql)){
 			preparedStatement.setString(1, student.getIdNumber());
-			preparedStatement.setObject(1, student.getIdType());
+			preparedStatement.setInt(1, student.getIdType().getId());
 			preparedStatement.setString(1, student.getName());
 			preparedStatement.setString(1, student.getEmail());
 			

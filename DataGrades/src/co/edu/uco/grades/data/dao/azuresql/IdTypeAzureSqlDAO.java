@@ -7,7 +7,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import co.edu.grades.data.dao.IdTypeDAO;
@@ -48,7 +47,7 @@ public class IdTypeAzureSqlDAO extends ConnectionSQL implements IdTypeDAO {
 
 	@Override
 	public void update(IdTypeDTO idType) {
-		String sql = "UPDATE IdType SET name= ? VALUES(?)";
+		String sql = "UPDATE IdType SET name = ? WHERE id = ?)";
 
 		try (PreparedStatement preparedStatement = getConnection().prepareStatement(sql)) {
 			preparedStatement.setString(1, idType.getName());

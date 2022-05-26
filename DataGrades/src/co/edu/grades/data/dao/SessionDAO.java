@@ -1,5 +1,7 @@
 package co.edu.grades.data.dao;
 
+import java.util.List;
+
 import co.edu.uco.grades.dto.SessionDTO;
 
 public interface SessionDAO {
@@ -10,5 +12,5 @@ public interface SessionDAO {
 	
 	void delete(int id);
 	
-	void find(SessionDTO session);
+	List<SessionDTO> find(SessionDTO session);
 }

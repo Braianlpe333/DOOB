@@ -4,17 +4,13 @@ import co.edu.uco.crosscutting.util.object.UtilObject;
 import co.edu.uco.crosscutting.util.text.UtilText;
 import co.edu.uco.grades.crosscuting.exception.GradesException;
 import co.edu.uco.grades.dto.ProfessorDTO;
-import co.edu.uco.grades.dto.Student_DTO;
-
 import static co.edu.uco.crosscutting.util.text.UtilText.SPACE;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 import co.edu.grades.data.dao.ProfessorDAO;
 import co.edu.grades.data.dao.connection.ConnectionSQL;
 
@@ -34,7 +30,7 @@ public class ProfessorAzureSqlDAO extends ConnectionSQL implements ProfessorDAO{
 		 
 		try(PreparedStatement preparedStatement = getConnection().prepareStatement(sql)){
 			preparedStatement.setString(1, professor.getIdNumber());
-			preparedStatement.setObject(1, professor.getIdType());
+			preparedStatement.setInt(1, professor.getIdType().getId());
 			preparedStatement.setString(1, professor.getName());
 			preparedStatement.setString(1, professor.getEmail());
 			
@@ -71,7 +67,7 @@ public class ProfessorAzureSqlDAO extends ConnectionSQL implements ProfessorDAO{
 
 	@Override
 	public void delete(int id) {
-		String sql = "DELETE FROM Student WHERE id=?";
+		String sql = "DELETE FROM Professor WHERE id=?";
 
 		try (PreparedStatement preparedStatement = getConnection().prepareStatement(sql)) {
 			preparedStatement.setInt(1, id);
@@ -89,35 +85,37 @@ public class ProfessorAzureSqlDAO extends ConnectionSQL implements ProfessorDAO{
 	}
 
 	@Override
-	public List<Student_DTO> find(Student_DTO student) {
+	public List<ProfessorDTO> find(ProfessorDTO professor) {
 		boolean setWhere = true;
 		List<Object> parameters = new ArrayList<>();
-		List<Student_DTO> results = new ArrayList<>();
+		List<ProfessorDTO> results = new ArrayList<>();
 
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("SELECT id, idNumber, idType, name, email").append(SPACE);
-		sb.append("FROM Student").append(SPACE);
+		sb.append("FROM Professor").append(SPACE);
 
-		if (!UtilObject.getUtilObject().isNull(student)) {
+		if (!UtilObject.getUtilObject().isNull(professor)) {
 
-			if (UtilNumeric.getUtilObject().isGreatherThan(student.getId(), 0)) {
+			if (UtilNumeric.getUtilObject().isGreatherThan(professor.getId(), 0)) {
 
 				sb.append("WHERE id = ? ");
-				parameters.add(student.getId());
+				parameters.add(professor.getId());
 				setWhere = false;
 
 			}
 
-			if (!UtilText.isEmpty(student.getIdNumber()	)) {
+			if (!UtilText.isEmpty(professor.getIdNumber())) {
 				sb.append(setWhere ? "WHERE " : "AND ");
 				sb.append("idNumber = ? ");
-				parameters.add(UtilText.trim(student.getIdNumber()));
+				parameters.add(UtilText.trim(professor.getIdNumber()));
+				setWhere = false;
 			}
 			
-			if(!UtilText.isEmpty(student.getName())) {
+			if(!UtilText.isEmpty(professor.getName())) {
+				sb.append(setWhere ? "WHERE " : "AND ");
 				sb.append("name = ? ");
-				parameters.add(UtilText.trim(student.getName()));
+				parameters.add(UtilText.trim(professor.getName()));
 			}
 
 		}
@@ -136,33 +134,33 @@ public class ProfessorAzureSqlDAO extends ConnectionSQL implements ProfessorDAO{
 			throw exception;
 		} catch (SQLException exception) {
 			throw GradesException.buildTechnicalDataExeption(
-					"There was a problem trying to retrieve Students on Azure SQL Server", exception);
+					"There was a problem trying to retrieve Professor on Azure SQL Server", exception);
 		} catch (Exception exception) {
 			throw GradesException.buildTechnicalDataExeption(
-					"An unexpected has ocurred problem trying to retrieve Students on Azure SQL Server", exception);
+					"An unexpected has ocurred problem trying to retrieve Professor on Azure SQL Server", exception);
 		}
 
 		return results;
 	}
 	
-	private List<Student_DTO> executeQuery(PreparedStatement preparedStatement){
+	private List<ProfessorDTO> executeQuery(PreparedStatement preparedStatement){
 		
-		List<Student_DTO> results = new ArrayList<>();
+		List<ProfessorDTO> results = new ArrayList<>();
 		
 		try (ResultSet resultset = preparedStatement.executeQuery()) {
 			results = assembleResults(resultset);
 		}catch (SQLException exception) {
 			throw GradesException.buildTechnicalDataExeption(
-					"There was a problem trying to execute the Query for recovery the Students on Azure SQL Server", exception);
+					"There was a problem trying to execute the Query for recovery the Professors on Azure SQL Server", exception);
 		} catch (Exception exception) {
 			throw GradesException.buildTechnicalDataExeption(
-					"An unexpected has ocurred problem trying to execute the Query for recovery the Students on Azure SQL Server", exception);
+					"An unexpected has ocurred problem trying to execute the Query for recovery the Professors on Azure SQL Server", exception);
 		}
 		return results;
 	}
 
-	private List<Student_DTO> assembleResults(ResultSet resultSet) {
-		List<Student_DTO> results = new ArrayList<>();
+	private List<ProfessorDTO> assembleResults(ResultSet resultSet) {
+		List<ProfessorDTO> results = new ArrayList<>();
 
 		try {
 			while (resultSet.next()) {
@@ -172,30 +170,30 @@ public class ProfessorAzureSqlDAO extends ConnectionSQL implements ProfessorDAO{
 			throw exception;
 		} catch (SQLException exception) {
 			throw GradesException.buildTechnicalDataExeption(
-					"There was a problem trying to recover the Students on Azure SQL Server", exception);
+					"There was a problem trying to recover the Professors on Azure SQL Server", exception);
 		} catch (Exception exception) {
 			throw GradesException.buildTechnicalDataExeption(
-					"An unexpected has ocurred problem trying to recover the Students on Azure SQL Server", exception);
+					"An unexpected has ocurred problem trying to recover the Professors on Azure SQL Server", exception);
 		}
 
 		return results;
 	}
 
-	private Student_DTO assembleDTO(ResultSet resultSet) {
-		Student_DTO dto = new Student_DTO();
+	private ProfessorDTO assembleDTO(ResultSet resultSet) {
+		ProfessorDTO dto = new ProfessorDTO();
 		try {
 			dto.setId(resultSet.getInt("id"));
 			dto.setIdNumber(resultSet.getString("idNumber"));
-			//dto.setIdType.(resultSet.("idType"));
+			// dto.setIdType.(resultSet.("idType"));
 			dto.setName(resultSet.getString("name"));
 			dto.setEmail(resultSet.getString("email"));
 
 		} catch (SQLException exception) {
 			throw GradesException.buildTechnicalDataExeption(
-					"There was a problem trying to assemble the Students on Azure SQL Server", exception);
+					"There was a problem trying to assemble the Professors on Azure SQL Server", exception);
 		} catch (Exception exception) {
 			throw GradesException.buildTechnicalDataExeption(
-					"An unexpected has ocurred problem trying to assemble the Students on Azure SQL Server", exception);
+					"An unexpected has ocurred problem trying to assemble the Professors on Azure SQL Server", exception);
 		}
 
 		return dto;

@@ -105,13 +105,15 @@ public class StudentAzureSqlDAO extends ConnectionSQL implements StudentDAO{
 
 			}
 
-			if (!UtilText.isEmpty(student.getIdNumber()	)) {
+			if (!UtilText.isEmpty(student.getIdNumber())) {
 				sb.append(setWhere ? "WHERE " : "AND ");
 				sb.append("idNumber = ? ");
 				parameters.add(UtilText.trim(student.getIdNumber()));
+				setWhere = false;
 			}
 			
 			if(!UtilText.isEmpty(student.getName())) {
+				sb.append(setWhere ? "WHERE " : "AND ");
 				sb.append("name = ? ");
 				parameters.add(UtilText.trim(student.getName()));
 			}

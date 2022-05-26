@@ -1,5 +1,7 @@
 package co.edu.grades.data.dao;
 
+import java.util.List;
+
 import co.edu.uco.grades.dto.AttendanceDTO;
 
 public interface AttendanceDAO {
@@ -10,5 +12,5 @@ public interface AttendanceDAO {
 	
 	void delete(int id);
 	
-	void find(AttendanceDTO idType);
+	List<AttendanceDTO> find(AttendanceDTO idType);
 }

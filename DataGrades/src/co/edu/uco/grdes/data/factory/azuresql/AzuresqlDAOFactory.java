@@ -3,7 +3,6 @@ package co.edu.uco.grdes.data.factory.azuresql;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-
 import co.edu.grades.data.dao.AttendanceDAO;
 import co.edu.grades.data.dao.CourseDAO;
 import co.edu.grades.data.dao.IdTypeDAO;
@@ -14,7 +13,6 @@ import co.edu.grades.data.dao.StudentCourseStateDAO;
 import co.edu.grades.data.dao.StudentDAO;
 import co.edu.grades.data.dao.SubjectDAO;
 import co.edu.uco.corsscuting.util.sql.UtilConnection;
-import co.edu.uco.crosscutting.util.object.UtilObject;
 import co.edu.uco.grades.crosscuting.exception.GradesException;
 import co.edu.uco.grades.crosscuting.exeption.enumeration.ExceptionLocation;
 import co.edu.uco.grades.crosscuting.exeption.enumeration.ExeptionType;
@@ -27,7 +25,6 @@ import co.edu.uco.grades.data.dao.azuresql.StudentAzureSqlDAO;
 import co.edu.uco.grades.data.dao.azuresql.StudentCourseAzureSqlDAO;
 import co.edu.uco.grades.data.dao.azuresql.StudentCourseStateAzureSqlDAO;
 import co.edu.uco.grades.data.dao.azuresql.SubjectAzureSqlDAO;
-import co.edu.uco.grades.dto.Student_DTO;
 import co.edu.uco.grdes.data.factory.DAOFactory;
 
 public class AzuresqlDAOFactory extends DAOFactory {

@@ -10,7 +10,5 @@ public interface CourseDAO {
 	
 	void update(CourseDTO idType);
 	
-	void delete(int id);
-	
 	List<CourseDTO> find(CourseDTO idType);
 }

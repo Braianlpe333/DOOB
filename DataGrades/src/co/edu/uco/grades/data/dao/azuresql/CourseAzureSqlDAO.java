@@ -69,25 +69,6 @@ public class CourseAzureSqlDAO extends ConnectionSQL implements CourseDAO{
 	}
 
 	@Override
-	public void delete(int id) {
-		String sql = "DELETE FROM Course WHERE id=?";
-
-		try (PreparedStatement preparedStatement = getConnection().prepareStatement(sql)) {
-			preparedStatement.setInt(1, id);
-
-			preparedStatement.executeUpdate();
-
-		} catch (SQLException exception) {
-			throw GradesException.buildTechnicalDataExeption(
-					"There was a problem trying to delete the new Course on Azure SQL Server", exception);
-		} catch (Exception exception) {
-			throw GradesException.buildTechnicalDataExeption(
-					"An unexpected has ocurred problem trying to delete the new Course on Azure SQL Server", exception);
-		}
-
-	}
-
-	@Override
 	public List<CourseDTO> find(CourseDTO course) {
 		boolean setWhere = true;
 		List<Object> parameters = new ArrayList<>();

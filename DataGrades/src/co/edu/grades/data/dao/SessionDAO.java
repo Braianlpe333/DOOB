@@ -10,7 +10,5 @@ public interface SessionDAO {
 	
 	void update(SessionDTO session);
 	
-	void delete(int id);
-	
 	List<SessionDTO> find(SessionDTO session);
 }

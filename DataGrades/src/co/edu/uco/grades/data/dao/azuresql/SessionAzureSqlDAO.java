@@ -62,26 +62,7 @@ public class SessionAzureSqlDAO extends ConnectionSQL implements SessionDAO{
 					"An unexpected has ocurred problem trying to update the new Session on Azure SQL Server", exception);
 		}
 
-	}
-
-	@Override
-	public void delete(int id) {
-		String sql = "DELETE FROM Course WHERE id=?";
-
-		try (PreparedStatement preparedStatement = getConnection().prepareStatement(sql)) {
-			preparedStatement.setInt(1, id);
-
-			preparedStatement.executeUpdate();
-
-		} catch (SQLException exception) {
-			throw GradesException.buildTechnicalDataExeption(
-					"There was a problem trying to delete the new Session on Azure SQL Server", exception);
-		} catch (Exception exception) {
-			throw GradesException.buildTechnicalDataExeption(
-					"An unexpected has ocurred problem trying to delete the new Session on Azure SQL Server", exception);
-		}
-
-	}
+	} 
 
 	@Override
 	public List<SessionDTO> find(SessionDTO session) {

@@ -10,7 +10,5 @@ public interface StudentCourseStateDAO {
 	
 	void update(StudentCourseStateDTO studentCourseState);
 	
-	void delete(int id);
-	
 	List<StudentCourseStateDTO> find(StudentCourseStateDTO studentCourseState);
 }

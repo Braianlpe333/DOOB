@@ -2,17 +2,17 @@ package co.edu.uco.bussinesslogic.impl;
 
 import java.util.List;
 
-import co.edu.uco.bussinesslogic.bussines.IdTypeBusiness;
+import co.edu.grades.data.dao.SubjectDAO;
 import co.edu.uco.crosscutting.util.object.UtilObject;
 import co.edu.uco.grades.crosscuting.exception.GradesException;
-import co.edu.uco.grades.dto.IdTypeDTO;
+import co.edu.uco.grades.dto.SubjectDTO;
 import co.edu.uco.grdes.data.factory.DAOFactory;
 
-public class IdTypeBusinessImpl implements IdTypeBusiness{
+public class SubjectBussinesImpl implements SubjectDAO{
 
 	private DAOFactory daoFactory;
 	
-	public IdTypeBusinessImpl(DAOFactory daoFactory) {
+	public SubjectBussinesImpl(DAOFactory daoFactory) {
 		if(UtilObject.getUtilObject().isNull(daoFactory)) {
 			throw GradesException.buildTechnicalBusinessLogicExeption("It´s not possible create a IdTypeBusinessImpl when the DAOFactory is null");
 		}
@@ -21,23 +21,22 @@ public class IdTypeBusinessImpl implements IdTypeBusiness{
 	}
 	
 	@Override
-	public void create(IdTypeDTO dto) {
-		daoFactory.getIdTypeDAO().create(dto);
+	public void create(SubjectDTO dto) {
+		daoFactory.getSubjectDAO().create(dto);
 	}
 
 	@Override
-	public void update(IdTypeDTO dto) {
-		daoFactory.getIdTypeDAO().update(dto);
+	public void update(SubjectDTO dto) {
+		daoFactory.getSubjectDAO().update(dto);
 	}
 
 	@Override
 	public void delete(int id) {
-		daoFactory.getIdTypeDAO().delete(id);
+		daoFactory.getSubjectDAO().delete(id);
 	}
 
 	@Override
-	public List<IdTypeDTO> find(IdTypeDTO dto) {
-		return daoFactory.getIdTypeDAO().find(dto);
+	public List<SubjectDTO> find(SubjectDTO dto) {
+		return daoFactory.getSubjectDAO().find(dto);
 	}
-	
 }

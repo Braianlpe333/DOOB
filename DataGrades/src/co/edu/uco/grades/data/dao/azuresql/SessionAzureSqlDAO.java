@@ -32,7 +32,7 @@ public class SessionAzureSqlDAO extends ConnectionSQL implements SessionDAO{
 		String sql = "INSERT INTO Session(course, date) VALUES(?, ?)";
 		 
 		try(PreparedStatement preparedStatement = getConnection().prepareStatement(sql)){
-			preparedStatement.setObject(1, session.getCourse());
+			preparedStatement.setInt(1, session.getCourse().getId());
 			preparedStatement.setDate(1, (Date) session.getDate());
 			
 			preparedStatement.executeUpdate();
@@ -46,10 +46,10 @@ public class SessionAzureSqlDAO extends ConnectionSQL implements SessionDAO{
 
 	@Override
 	public void update(SessionDTO session) {
-		String sql = "UPDATE Subject SET name=?  WHERE id = ?";
+		String sql = "UPDATE Session SET course=?, date=?  WHERE id = ?";
 
 		try (PreparedStatement preparedStatement = getConnection().prepareStatement(sql)) {
-			preparedStatement.setObject(1, session.getCourse());
+			preparedStatement.setInt(1, session.getCourse().getId());
 			preparedStatement.setDate(1, (Date) session.getDate());
 
 			preparedStatement.executeUpdate();
@@ -72,7 +72,7 @@ public class SessionAzureSqlDAO extends ConnectionSQL implements SessionDAO{
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("SELECT id, idNumber, idType, name, email").append(SPACE);
+		sb.append("SELECT id, course, date").append(SPACE);
 		sb.append("FROM Session").append(SPACE);
 
 		if (!UtilObject.getUtilObject().isNull(session)) {
@@ -95,7 +95,6 @@ public class SessionAzureSqlDAO extends ConnectionSQL implements SessionDAO{
 				sb.append(setWhere ? "WHERE " : "AND ");
 				sb.append("initialDate = ? ");
 				parameters.add(session.getDate());
-				setWhere = false;
 			}	
 
 		}
@@ -114,10 +113,10 @@ public class SessionAzureSqlDAO extends ConnectionSQL implements SessionDAO{
 			throw exception;
 		} catch (SQLException exception) {
 			throw GradesException.buildTechnicalDataExeption(
-					"There was a problem trying to retrieve Subject on Azure SQL Server", exception);
+					"There was a problem trying to retrieve Sessions on Azure SQL Server", exception);
 		} catch (Exception exception) {
 			throw GradesException.buildTechnicalDataExeption(
-					"An unexpected has ocurred problem trying to retrieve Subject on Azure SQL Server", exception);
+					"An unexpected has ocurred problem trying to retrieve Sessions on Azure SQL Server", exception);
 		}
 
 		return results;
@@ -131,10 +130,10 @@ public class SessionAzureSqlDAO extends ConnectionSQL implements SessionDAO{
 			results = assembleResults(resultset);
 		}catch (SQLException exception) {
 			throw GradesException.buildTechnicalDataExeption(
-					"There was a problem trying to execute the Query for recovery the Subjects on Azure SQL Server", exception);
+					"There was a problem trying to execute the Query for recovery the Sessions on Azure SQL Server", exception);
 		} catch (Exception exception) {
 			throw GradesException.buildTechnicalDataExeption(
-					"An unexpected has ocurred problem trying to execute the Query for recovery the Subjects on Azure SQL Server", exception);
+					"An unexpected has ocurred problem trying to execute the Query for recovery the Sessions on Azure SQL Server", exception);
 		}
 		return results;
 	}
@@ -150,10 +149,10 @@ public class SessionAzureSqlDAO extends ConnectionSQL implements SessionDAO{
 			throw exception;
 		} catch (SQLException exception) {
 			throw GradesException.buildTechnicalDataExeption(
-					"There was a problem trying to recover the Subjects on Azure SQL Server", exception);
+					"There was a problem trying to recover the Sessions on Azure SQL Server", exception);
 		} catch (Exception exception) {
 			throw GradesException.buildTechnicalDataExeption(
-					"An unexpected has ocurred problem trying to recover the Subjects on Azure SQL Server", exception);
+					"An unexpected has ocurred problem trying to recover the Sessions on Azure SQL Server", exception);
 		}
 
 		return results;
@@ -167,10 +166,10 @@ public class SessionAzureSqlDAO extends ConnectionSQL implements SessionDAO{
 			dto.setDate(resultSet.getDate("date"));
 		} catch (SQLException exception) {
 			throw GradesException.buildTechnicalDataExeption(
-					"There was a problem trying to assemble the Subjects on Azure SQL Server", exception);
+					"There was a problem trying to assemble the Sessions on Azure SQL Server", exception);
 		} catch (Exception exception) {
 			throw GradesException.buildTechnicalDataExeption( 	
-					"An unexpected has ocurred problem trying to assemble the Subjects on Azure SQL Server", exception);
+					"An unexpected has ocurred problem trying to assemble the Sessions on Azure SQL Server", exception);
 		}
 
 		return dto;

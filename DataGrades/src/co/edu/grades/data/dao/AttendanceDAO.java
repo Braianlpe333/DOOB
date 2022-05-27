@@ -10,7 +10,5 @@ public interface AttendanceDAO {
 	
 	void update(AttendanceDTO idType);
 	
-	void delete(int id);
-	
 	List<AttendanceDTO> find(AttendanceDTO idType);
 }

@@ -65,25 +65,6 @@ public class StudentCourseAzureSqlDAO extends ConnectionSQL implements StudentCo
 	}
 
 	@Override
-	public void delete(int id) {
-		String sql = "DELETE FROM studentCourse WHERE id=?";
-
-		try (PreparedStatement preparedStatement = getConnection().prepareStatement(sql)) {
-			preparedStatement.setInt(1, id);
-
-			preparedStatement.executeUpdate();
-
-		} catch (SQLException exception) {
-			throw GradesException.buildTechnicalDataExeption(
-					"There was a problem trying to delete the new StudentCourse on Azure SQL Server", exception);
-		} catch (Exception exception) {
-			throw GradesException.buildTechnicalDataExeption(
-					"An unexpected has ocurred problem trying to delete the new StudentCourse on Azure SQL Server", exception);
-		}
-
-	}
-
-	@Override
 	public List<StudentCourseDTO> find(StudentCourseDTO studentCourse) {
 		boolean setWhere = true;
 		List<Object> parameters = new ArrayList<>();
@@ -91,8 +72,8 @@ public class StudentCourseAzureSqlDAO extends ConnectionSQL implements StudentCo
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("SELECT id, name").append(SPACE);
-		sb.append("FROM Professor").append(SPACE);
+		sb.append("SELECT id, student, course, state").append(SPACE);
+		sb.append("FROM StudentCourse").append(SPACE);
 
 		if (!UtilObject.getUtilObject().isNull(studentCourse)) {
 

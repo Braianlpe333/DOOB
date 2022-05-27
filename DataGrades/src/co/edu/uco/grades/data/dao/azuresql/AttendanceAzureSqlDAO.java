@@ -27,7 +27,7 @@ public class AttendanceAzureSqlDAO extends ConnectionSQL implements AttendanceDA
 		
 	@Override
 	public void create(AttendanceDTO attendance) {
-		String sql = "INSERT INTO Course(studentCourse, session, attended) VALUES(?, ?, ?)";
+		String sql = "INSERT INTO Attendance(studentCourse, session, attended) VALUES(?, ?, ?)";
 		
 		try(PreparedStatement preparedStatement = getConnection().prepareStatement(sql)){
 			preparedStatement.setInt(1, attendance.getStudentCourse().getId());
@@ -45,7 +45,7 @@ public class AttendanceAzureSqlDAO extends ConnectionSQL implements AttendanceDA
 
 	@Override
 	public void update(AttendanceDTO attendance) {
-		String sql = "UPDATE Subject SET name=?  WHERE id = ?";
+		String sql = "UPDATE attendance SET studentCourse=?, session=?, attended=?  WHERE id = ?";
 
 		try (PreparedStatement preparedStatement = getConnection().prepareStatement(sql)) {
 			preparedStatement.setInt(1, attendance.getStudentCourse().getId());
@@ -64,25 +64,7 @@ public class AttendanceAzureSqlDAO extends ConnectionSQL implements AttendanceDA
 
 	}
 
-	@Override
-	public void delete(int id) {
-		String sql = "DELETE FROM Course WHERE id=?";
-
-		try (PreparedStatement preparedStatement = getConnection().prepareStatement(sql)) {
-			preparedStatement.setInt(1, id);
-
-			preparedStatement.executeUpdate();
-
-		} catch (SQLException exception) {
-			throw GradesException.buildTechnicalDataExeption(
-					"There was a problem trying to delete the new Attendance on Azure SQL Server", exception);
-		} catch (Exception exception) {
-			throw GradesException.buildTechnicalDataExeption(
-					"An unexpected has ocurred problem trying to delete the new Attendance on Azure SQL Server", exception);
-		}
-
-	}
-
+	
 	@Override
 	public List<AttendanceDTO> find(AttendanceDTO attendance) {
 		boolean setWhere = true;
@@ -91,8 +73,8 @@ public class AttendanceAzureSqlDAO extends ConnectionSQL implements AttendanceDA
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("SELECT id, idNumber, idType, name, email").append(SPACE);
-		sb.append("FROM Professor").append(SPACE);
+		sb.append("SELECT id, studentCourse, session, attended").append(SPACE);
+		sb.append("FROM Attendance").append(SPACE);
 
 		if (!UtilObject.getUtilObject().isNull(attendance)) {
 
@@ -105,21 +87,21 @@ public class AttendanceAzureSqlDAO extends ConnectionSQL implements AttendanceDA
 
 			if (UtilNumeric.getUtilObject().isGreatherThan(attendance.getStudentCourse().getId(), 0)) {
 				sb.append(setWhere ? "WHERE " : "AND ");
-				sb.append("course = ? ");
+				sb.append("studentCourse = ? ");
 				parameters.add(attendance.getStudentCourse().getId());
 				setWhere = false;
 			}
 			
 			if (UtilNumeric.getUtilObject().isGreatherThan(attendance.getSession().getId(), 0)) {
 				sb.append(setWhere ? "WHERE " : "AND ");
-				sb.append("course = ? ");
+				sb.append("session = ? ");
 				parameters.add(attendance.getSession().getId());
 				setWhere = false;
 			}
 			
 			if(!UtilObject.getUtilObject().isNull(attendance.isAttended())) {
 				sb.append(setWhere ? "WHERE " : "AND ");
-				sb.append("attendance = ? ");
+				sb.append("attended = ? ");
 				parameters.add(attendance.isAttended());
 				setWhere = false;
 			}
@@ -140,10 +122,10 @@ public class AttendanceAzureSqlDAO extends ConnectionSQL implements AttendanceDA
 			throw exception;
 		} catch (SQLException exception) {
 			throw GradesException.buildTechnicalDataExeption(
-					"There was a problem trying to retrieve Subject on Azure SQL Server", exception);
+					"There was a problem trying to retrieve Attendances on Azure SQL Server", exception);
 		} catch (Exception exception) {
 			throw GradesException.buildTechnicalDataExeption(
-					"An unexpected has ocurred problem trying to retrieve Subject on Azure SQL Server", exception);
+					"An unexpected has ocurred problem trying to retrieve Attendances on Azure SQL Server", exception);
 		}
 
 		return results;
@@ -157,10 +139,10 @@ public class AttendanceAzureSqlDAO extends ConnectionSQL implements AttendanceDA
 			results = assembleResults(resultset);
 		}catch (SQLException exception) {
 			throw GradesException.buildTechnicalDataExeption(
-					"There was a problem trying to execute the Query for recovery the Subjects on Azure SQL Server", exception);
+					"There was a problem trying to execute the Query for recovery the Attendances on Azure SQL Server", exception);
 		} catch (Exception exception) {
 			throw GradesException.buildTechnicalDataExeption(
-					"An unexpected has ocurred problem trying to execute the Query for recovery the Subjects on Azure SQL Server", exception);
+					"An unexpected has ocurred problem trying to execute the Query for recovery the Attendances on Azure SQL Server", exception);
 		}
 		return results;
 	}
@@ -176,10 +158,10 @@ public class AttendanceAzureSqlDAO extends ConnectionSQL implements AttendanceDA
 			throw exception;
 		} catch (SQLException exception) {
 			throw GradesException.buildTechnicalDataExeption(
-					"There was a problem trying to recover the Subjects on Azure SQL Server", exception);
+					"There was a problem trying to recover the Attendances on Azure SQL Server", exception);
 		} catch (Exception exception) {
 			throw GradesException.buildTechnicalDataExeption(
-					"An unexpected has ocurred problem trying to recover the Subjects on Azure SQL Server", exception);
+					"An unexpected has ocurred problem trying to recover the Attendances on Azure SQL Server", exception);
 		}
 
 		return results;
@@ -193,10 +175,10 @@ public class AttendanceAzureSqlDAO extends ConnectionSQL implements AttendanceDA
 			dto.setAttended(resultSet.getBoolean("attended"));
 		} catch (SQLException exception) {
 			throw GradesException.buildTechnicalDataExeption(
-					"There was a problem trying to assemble the Subjects on Azure SQL Server", exception);
+					"There was a problem trying to assemble the Attendances on Azure SQL Server", exception);
 		} catch (Exception exception) {
 			throw GradesException.buildTechnicalDataExeption( 	
-					"An unexpected has ocurred problem trying to assemble the Subjects on Azure SQL Server", exception);
+					"An unexpected has ocurred problem trying to assemble the Attendances on Azure SQL Server", exception);
 		}
 
 		return dto;

@@ -32,8 +32,8 @@ public class CourseAzureSqlDAO extends ConnectionSQL implements CourseDAO{
 		String sql = "INSERT INTO Course(subject, professor, initialDate, finalDate) VALUES(?, ?, ?, ?)";
 		
 		try(PreparedStatement preparedStatement = getConnection().prepareStatement(sql)){
-			preparedStatement.setObject(1, course.getSubject());
-			preparedStatement.setObject(1, course.getProfessor());
+			preparedStatement.setInt(1, course.getSubject().getId());
+			preparedStatement.setInt(1, course.getProfessor().getId());
 			preparedStatement.setDate(1, (Date) course.getInitialDate());
 			preparedStatement.setDate(1, (Date) course.getFinalDate());
 			
@@ -48,7 +48,7 @@ public class CourseAzureSqlDAO extends ConnectionSQL implements CourseDAO{
 
 	@Override
 	public void update(CourseDTO course) {
-		String sql = "UPDATE IdType SET subject=?, professor=?, initialDate=?, finalDate=?  WHERE id = ?";
+		String sql = "UPDATE Course SET subject=?, professor=?, initialDate=?, finalDate=?  WHERE id = ?";
 
 		try (PreparedStatement preparedStatement = getConnection().prepareStatement(sql)) {
 			preparedStatement.setInt(1, course.getSubject().getId());
@@ -76,8 +76,8 @@ public class CourseAzureSqlDAO extends ConnectionSQL implements CourseDAO{
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("SELECT id, idNumber, idType, name, email").append(SPACE);
-		sb.append("FROM Professor").append(SPACE);
+		sb.append("SELECT id, subject, professor, initialDate, finalDate").append(SPACE);
+		sb.append("FROM Course").append(SPACE);
 
 		if (!UtilObject.getUtilObject().isNull(course)) {
 

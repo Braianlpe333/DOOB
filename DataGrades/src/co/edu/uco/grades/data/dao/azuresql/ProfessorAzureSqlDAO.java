@@ -45,7 +45,7 @@ public class ProfessorAzureSqlDAO extends ConnectionSQL implements ProfessorDAO{
 
 	@Override
 	public void update(ProfessorDTO professor) {
-		String sql = "UPDATE IdType SET idNumber=?, idType=?, name=?, email=?  WHERE id = ?";
+		String sql = "UPDATE Professor SET idNumber=?, idType=?, name=?, email=?  WHERE id = ?";
 
 		try (PreparedStatement preparedStatement = getConnection().prepareStatement(sql)) {
 			preparedStatement.setString(1, professor.getIdNumber());
@@ -112,10 +112,24 @@ public class ProfessorAzureSqlDAO extends ConnectionSQL implements ProfessorDAO{
 				setWhere = false;
 			}
 			
+			if (UtilNumeric.getUtilObject().isGreatherThan(professor.getIdType().getId(), 0)) {
+				sb.append(setWhere ? "WHERE " : "AND ");
+				sb.append("idType = ? ");
+				parameters.add(professor.getIdType().getId());
+				setWhere = false;
+			}
+			
 			if(!UtilText.isEmpty(professor.getName())) {
 				sb.append(setWhere ? "WHERE " : "AND ");
 				sb.append("name = ? ");
 				parameters.add(UtilText.trim(professor.getName()));
+				setWhere = false;
+			}
+			
+			if(!UtilText.isEmpty(professor.getEmail())) {
+				sb.append(setWhere ? "WHERE " : "AND ");
+				sb.append("email = ? ");
+				parameters.add(UtilText.trim(professor.getEmail()));
 			}
 
 		}

@@ -45,7 +45,7 @@ public class StudentAzureSqlDAO extends ConnectionSQL implements StudentDAO{
 
 	@Override
 	public void update(Student_DTO student) {
-		String sql = "UPDATE IdType SET idNumber=?, idType=?, name=?, email=?  WHERE id = ?";
+		String sql = "UPDATE Students SET idNumber=?, idType=?, name=?, email=?  WHERE id = ?";
 
 		try (PreparedStatement preparedStatement = getConnection().prepareStatement(sql)) {
 			preparedStatement.setString(1, student.getIdNumber());
@@ -112,10 +112,24 @@ public class StudentAzureSqlDAO extends ConnectionSQL implements StudentDAO{
 				setWhere = false;
 			}
 			
+			if (UtilNumeric.getUtilObject().isGreatherThan(student.getIdType().getId(), 0)) {
+				sb.append(setWhere ? "WHERE " : "AND ");
+				sb.append("idType = ? ");
+				parameters.add(student.getIdType().getId());
+				setWhere = false;
+			}
+			
 			if(!UtilText.isEmpty(student.getName())) {
 				sb.append(setWhere ? "WHERE " : "AND ");
 				sb.append("name = ? ");
 				parameters.add(UtilText.trim(student.getName()));
+				setWhere = false;
+			}
+			
+			if(!UtilText.isEmpty(student.getEmail())) {
+				sb.append(setWhere ? "WHERE " : "AND ");
+				sb.append("email = ? ");
+				parameters.add(UtilText.trim(student.getEmail()));
 			}
 
 		}

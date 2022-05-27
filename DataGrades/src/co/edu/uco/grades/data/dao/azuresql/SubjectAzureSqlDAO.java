@@ -62,7 +62,7 @@ public class SubjectAzureSqlDAO extends ConnectionSQL implements SubjectDAO{
 
 	@Override
 	public void delete(int id) {
-		String sql = "DELETE FROM Course WHERE id=?";
+		String sql = "DELETE FROM Subject WHERE id=?";
 
 		try (PreparedStatement preparedStatement = getConnection().prepareStatement(sql)) {
 			preparedStatement.setInt(1, id);

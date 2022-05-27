@@ -42,7 +42,7 @@ public class StudentCourseStateAzureSqlDAO extends ConnectionSQL implements Stud
 
 	@Override
 	public void update(StudentCourseStateDTO studentCourseState) {
-		String sql = "UPDATE Subject SET name=?  WHERE id = ?";
+		String sql = "UPDATE StudentCourseState SET name=?  WHERE id = ?";
 
 		try (PreparedStatement preparedStatement = getConnection().prepareStatement(sql)) {
 			preparedStatement.setString(1, studentCourseState.getName());
@@ -60,25 +60,6 @@ public class StudentCourseStateAzureSqlDAO extends ConnectionSQL implements Stud
 	}
 
 	@Override
-	public void delete(int id) {
-		String sql = "DELETE FROM Course WHERE id=?";
-
-		try (PreparedStatement preparedStatement = getConnection().prepareStatement(sql)) {
-			preparedStatement.setInt(1, id);
-
-			preparedStatement.executeUpdate();
-
-		} catch (SQLException exception) {
-			throw GradesException.buildTechnicalDataExeption(
-					"There was a problem trying to delete the new StudentCourseState on Azure SQL Server", exception);
-		} catch (Exception exception) {
-			throw GradesException.buildTechnicalDataExeption(
-					"An unexpected has ocurred problem trying to delete the new StudentCourseState on Azure SQL Server", exception);
-		}
-
-	}
-
-	@Override
 	public List<StudentCourseStateDTO> find(StudentCourseStateDTO studentCourseState) {
 		boolean setWhere = true;
 		List<Object> parameters = new ArrayList<>();
@@ -87,7 +68,7 @@ public class StudentCourseStateAzureSqlDAO extends ConnectionSQL implements Stud
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("SELECT id, name").append(SPACE);
-		sb.append("FROM Professor").append(SPACE);
+		sb.append("FROM StudentCourseState").append(SPACE);
 
 		if (!UtilObject.getUtilObject().isNull(studentCourseState)) {
 

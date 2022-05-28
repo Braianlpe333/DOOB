@@ -53,7 +53,9 @@ public class GradesException extends GeneralExeption{
 		return new GradesException(null, tecnicalMessage, null, ExeptionType.TECHNICAL , ExceptionLocation.BUSINESS_LOGIC);
 	}
 	
-	
+	public static GradesException buildBusinessLogicExeption(String businessMessage) {
+		return new GradesException(businessMessage, null, null, ExeptionType.BUSINESS , ExceptionLocation.BUSINESS_LOGIC);
+	}
 	
 	public static GradesException buildTechnicalDataExeption(String tecnicalMessage, Exception rootException) {
 		return new GradesException(null, tecnicalMessage, rootException, ExeptionType.TECHNICAL , ExceptionLocation.DATA);

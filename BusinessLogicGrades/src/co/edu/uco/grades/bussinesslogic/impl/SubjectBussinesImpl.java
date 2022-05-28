@@ -1,4 +1,4 @@
-package co.edu.uco.bussinesslogic.impl;
+package co.edu.uco.grades.bussinesslogic.impl;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ public class SubjectBussinesImpl implements SubjectDAO{
 	
 	public SubjectBussinesImpl(DAOFactory daoFactory) {
 		if(UtilObject.getUtilObject().isNull(daoFactory)) {
-			throw GradesException.buildTechnicalBusinessLogicExeption("It´s not possible create a IdTypeBusinessImpl when the DAOFactory is null");
+			throw GradesException.buildTechnicalBusinessLogicExeption("Itï¿½s not possible create a IdTypeBusinessImpl when the DAOFactory is null");
 		}
 		
 		this.daoFactory = daoFactory;

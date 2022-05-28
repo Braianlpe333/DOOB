@@ -1,11 +1,11 @@
-package co.edu.uco.bussinesslogic.bussines;
+package co.edu.uco.grades.businesslogic.facade;
 
 import java.util.List;
 
 import co.edu.uco.grades.dto.IdTypeDTO;
 
-public interface IdTypeBusiness {
-
+public interface IdTypeFacade {
+	
 	void create(IdTypeDTO dto);
 	
 	void update(IdTypeDTO dto);

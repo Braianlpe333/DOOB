@@ -1,4 +1,4 @@
-package co.edu.uco.bussinesslogic.bussines;
+package co.edu.uco.grades.bussinesslogic.bussines;
 
 import java.util.List;
 

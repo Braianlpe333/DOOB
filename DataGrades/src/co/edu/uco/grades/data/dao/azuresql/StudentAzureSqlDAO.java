@@ -3,6 +3,7 @@ import co.edu.uco.crosscutting.util.numeric.UtilNumeric;
 import co.edu.uco.crosscutting.util.object.UtilObject;
 import co.edu.uco.crosscutting.util.text.UtilText;
 import co.edu.uco.grades.crosscuting.exception.GradesException;
+import co.edu.uco.grades.dto.IdTypeDTO;
 import co.edu.uco.grades.dto.Student_DTO;
 import static co.edu.uco.crosscutting.util.text.UtilText.SPACE;
 import java.sql.Connection;
@@ -196,9 +197,12 @@ public class StudentAzureSqlDAO extends ConnectionSQL implements StudentDAO{
 	private Student_DTO assembleDTO(ResultSet resultSet) {
 		Student_DTO dto = new Student_DTO();
 		try {
+			int idType = resultSet.getInt("");
+			IdTypeDTO idtypeDTO = new IdTypeDTO(idType,UtilText.EMPTY);
+			List<IdTypeDTO> idTypeList = IdTypeAzureSqlDAO.build(getConnection()).find(idtypeDTO);
 			dto.setId(resultSet.getInt("id"));
 			dto.setIdNumber(resultSet.getString("idNumber"));
-			//dto.setIdType.(resultSet.("idType"));
+			dto.setIdType(idTypeList.get(0));
 			dto.setName(resultSet.getString("name"));
 			dto.setEmail(resultSet.getString("email"));
 

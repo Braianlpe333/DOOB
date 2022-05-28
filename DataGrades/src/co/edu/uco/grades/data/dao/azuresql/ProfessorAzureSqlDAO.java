@@ -204,6 +204,8 @@ public class ProfessorAzureSqlDAO extends ConnectionSQL implements ProfessorDAO{
 			dto.setId(resultSet.getInt("id"));
 			dto.setIdNumber(resultSet.getString("idNumber"));
 			dto.setIdType(idTypeList.get(0));
+			
+			System.out.println("Prueba Commit");
 			dto.setName(resultSet.getString("name"));
 			dto.setEmail(resultSet.getString("email"));
 
